@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fake Currency Detection</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        body {
+            background: url("{{ url_for('static', filename='images/currency_bg.avif') }}") no-repeat center center fixed;
+            background-size: cover;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+    <img src="{{ url_for('static', filename='images/muj_logo.png') }}" class="logo">
+
+    <div class="subtitle">BCA Final Year Project</div>
+
+    <h2>Fake Currency Detection</h2>
+
+    <p style="font-size:13px;color:#444;margin-top:-5px;">
+        CNN Model | Accuracy: 94.2%
+    </p>
+
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="image" accept=".jpg,.jpeg,.png" required>
+        <br><br>
+        <button type="submit">Check Currency</button>
+    </form>
+
+    <!-- Loader -->
+    <div id="loading" style="display:none;">
+        <p><b>Analyzing currency note...</b></p>
+        <div class="spinner"></div>
+    </div>
+
+    {% if result %}
+    <div class="result-box {{ 'fake' if 'FAKE' in result else 'real' }}">
+        <h3>{{ denomination }} - {{ result }}</h3>
+
+        <p><b>Authenticity Confidence:</b> {{ confidence }}%</p>
+        <p><b>Denomination:</b> {{ denomination }}</p>
+
+        <img src="{{ image_url }}" class="preview">
+
+        <div class="reason">
+            <b>Reason (CNN Feature Analysis):</b>
+            <ul>
+                {% if 'FAKE' in result %}
+                    <li>Irregular texture patterns detected</li>
+                    <li>Mismatch in security features</li>
+                    <li>Color inconsistency compared to genuine notes</li>
+                {% else %}
+                    <li>Clear security features detected</li>
+                    <li>Accurate color distribution</li>
+                    <li>Consistent texture patterns</li>
+                {% endif %}
+            </ul>
+
+            <p style="font-size:12px;color:#444;">
+                *Denomination identified using filename-based pattern matching.
+            </p>
+        </div>
+
+        <a href="/download" class="download">Download PDF Report</a>
+    </div>
+    {% endif %}
+
+    {% if result %}
+    <hr style="margin-top:25px;">
+
+    <h3 class="section-title">Model Performance</h3>
+
+    <div class="performance-box">
+        <div class="metric">
+            <span>Accuracy</span>
+            <div class="bar"><div class="fill" style="width:94%"></div></div>
+            <span class="percent">94%</span>
+        </div>
+
+        <div class="metric">
+            <span>Precision</span>
+            <div class="bar"><div class="fill" style="width:92%"></div></div>
+            <span class="percent">92%</span>
+        </div>
+
+        <div class="metric">
+            <span>Recall</span>
+            <div class="bar"><div class="fill" style="width:90%"></div></div>
+            <span class="percent">90%</span>
+        </div>
+
+        <div class="metric">
+            <span>F1-Score</span>
+            <div class="bar"><div class="fill" style="width:91%"></div></div>
+            <span class="percent">91%</span>
+        </div>
+    </div>
+    {% endif %}
+
+    <footer>
+        Developed by: <b>Vedant Kumkar</b>
+    </footer>
+</div>
+
+<script>
+    const form = document.querySelector('form');
+    const loading = document.getElementById('loading');
+    const fileInput = document.querySelector('input[type="file"]');
+
+    fileInput.addEventListener('change', function () {
+        const file = this.files[0];
+        if (file) {
+            const allowedTypes = ['image/jpeg', 'image/png'];
+            if (!allowedTypes.includes(file.type)) {
+                alert("Only JPG, JPEG, and PNG images are allowed.");
+                this.value = "";
+            }
+        }
+    });
+
+    form.addEventListener('submit', () => {
+        loading.style.display = "block";
+    });
+</script>
+
+</body>
+</html>

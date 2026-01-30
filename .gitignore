@@ -1,0 +1,7 @@
+dataset/
+prediction_log.csv
+static/report.pdf
+__pycache__/
+*.pyc
+model/*.h5
+.env

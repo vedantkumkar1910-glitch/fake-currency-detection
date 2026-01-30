@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            background: #f5f5f5;
+            font-family: Arial;
+        }
+        .box {
+            width: 400px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 15px;
+        }
+        .stat {
+            font-size: 16px;
+            margin: 8px 0;
+        }
+        .fake { color: red; font-weight: bold; }
+        .real { color: green; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2>Admin Statistics</h2>
+
+    <div class="stat">Total Checks: <b>{{ total }}</b></div>
+    <div class="stat fake">Fake Detected: {{ fake }}</div>
+    <div class="stat real">Real Detected: {{ real }}</div>
+    <div class="stat">Most Common Denomination: <b>{{ most_common }}</b></div>
+
+    <p style="font-size:12px;margin-top:15px;">
+        Internal Monitoring Dashboard
+    </p>
+</div>
+
+</body>
+</html>
