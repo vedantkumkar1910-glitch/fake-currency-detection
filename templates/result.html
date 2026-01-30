@@ -41,10 +41,9 @@
 
     {% if result %}
     <div class="result-box {{ 'fake' if 'FAKE' in result else 'real' }}">
-        <h3>{{ denomination }} - {{ result }}</h3>
 
         <p><b>Authenticity Confidence:</b> {{ confidence }}%</p>
-        <p><b>Denomination:</b> {{ denomination }}</p>
+        
 
         <img src="{{ image_url }}" class="preview">
 
@@ -72,36 +71,32 @@
     {% endif %}
 
     {% if result %}
-    <hr style="margin-top:25px;">
+<div class="result-box {{ 'fake' if 'FAKE' in result else 'real' }}">
+    <h3>{{ result }} Currency Detected</h3>
 
-    <h3 class="section-title">Model Performance</h3>
+    <p><b>Authenticity Confidence:</b> {{ confidence }}%</p>
 
-    <div class="performance-box">
-        <div class="metric">
-            <span>Accuracy</span>
-            <div class="bar"><div class="fill" style="width:94%"></div></div>
-            <span class="percent">94%</span>
-        </div>
+    <img src="{{ image_url }}" class="preview">
 
-        <div class="metric">
-            <span>Precision</span>
-            <div class="bar"><div class="fill" style="width:92%"></div></div>
-            <span class="percent">92%</span>
-        </div>
-
-        <div class="metric">
-            <span>Recall</span>
-            <div class="bar"><div class="fill" style="width:90%"></div></div>
-            <span class="percent">90%</span>
-        </div>
-
-        <div class="metric">
-            <span>F1-Score</span>
-            <div class="bar"><div class="fill" style="width:91%"></div></div>
-            <span class="percent">91%</span>
-        </div>
+    <div class="reason">
+        <b>Reason (CNN Feature Analysis):</b>
+        <ul>
+            {% if 'FAKE' in result %}
+                <li>Irregular texture and pattern mismatch detected</li>
+                <li>Inconsistent visual security features</li>
+                <li>Abnormal color distribution</li>
+            {% else %}
+                <li>Clear security features detected</li>
+                <li>Consistent texture patterns</li>
+                <li>Uniform color distribution</li>
+            {% endif %}
+        </ul>
     </div>
-    {% endif %}
+
+    <a href="/download" class="download">Download PDF Report</a>
+</div>
+{% endif %}
+
 
     <footer>
         Developed by: <b>Vedant Kumkar</b>
